@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    <script>
+      async function something() {
+        const input = document.getElementById('myinput').value
+        const response = await axios.post('http://localhost:3001/synthesize', {
+          input,
+        })
+        const audiosrc = `data:audio/mp3;base64,${response.data.audioContent}`
+        var sound = document.createElement('audio')
+        sound.src = audiosrc
+        sound.controls = 'controls'
+        sound.style.display = 'block'
+        document.getElementById('myaudio').appendChild(sound)
+      }
+    </script>
+  </head>
+  <body>
+    <div class="App">
+      <h1>Text to Speech</h1>
+      <textarea name="" id="myinput" placeholder="Enter something"></textarea>
+      <br />
+      <button onclick="something()">Synthesize</button>
+      <br />
+      <div id="myaudio" style="width: 500px; height: 500px"></div>
+    </div>
+  </body>
+</html>
